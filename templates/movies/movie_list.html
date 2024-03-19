@@ -1,0 +1,53 @@
+{% extends 'movies/base.html' %}
+{% load static %}
+
+{% block title %}| {{ news.name }}{% endblock title %}
+
+
+{% block content %}
+    <h1 class="text-center mb-3">{{ news.name }}</h1>
+    <div class="mb-3 d-flex flex-column align-items-center text-center">
+        <img src="{{ news.images.first.image.url }}" class="w-75" alt="{{ news.name }}">
+    </div>
+    <p class="mt-5">
+        {% for tag in news.tags.all %}
+            <span>{{ tag.name }}</span> /
+        {% endfor %}
+    </p>
+    <p>{{ news.content }}</p>
+    <div>
+        <table class="table mt-1">
+            {% for attribute in news.attributes.all %}
+                <tr>
+                    <td>{{ attribute.key }}</td>
+                    <td>
+                        {% if attribute.link is not None %}
+                            <a href="{{ attribute.link }}">{{ attribute.value }}</a>
+                        {% else %}
+                            {{ attribute.value }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% if news.info %}
+        <p class="text-end">
+            <a target="_blank" href="{{ news.info.link }}">Link</a> |
+            <span>{{ news.info.email }}</span> : <span>{{ news.info.rating }}</span>
+        </p>
+    {% endif %}
+    <img src="{% get_media_prefix %}images/ben10.jpeg" class="card-img-top mt-5" alt="Ben 10">
+    <h4 class="mt-5">Сюжет "Бен-10" рассказывает о приключениях юного Бена Теннисона, который случайно находит
+        удивительное
+        устройство под названием Омнитрикс. Это устройство дает Бену способность превращаться в различных инопланетных
+
+        существ, каждое из которых обладает уникальными способностями. С помощью Омнитрикса Бен и его друзья Гвен и
+        Джоки сталкиваются с различными угрозами и злодеями, путешествуя по вселенной и защищая Землю от
+        опасностей.</h4>
+    <img src="{% get_media_prefix %}images/ben1.webp" class="card-img-top mt-5" alt="Ben 10">
+    <img src="{% get_media_prefix %}images/pauk1.jpg" class="card-img-top mt-5" alt="pauk1">
+    <img src="{% get_media_prefix %}images/fiksiki1.jpg" class="card-img-top mt-5" alt="pauk1">
+    <img src="{% get_media_prefix %}images/kungfu1.webp" class="card-img-top mt-5" alt="pauk1">
+    <img src="{% get_media_prefix %}images/makvin1.jpg" class="card-img-top mt-5" alt="pauk1">
+{% endblock content %}
