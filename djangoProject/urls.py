@@ -20,26 +20,21 @@ from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import redirect
 
-from movies.views import main, detail_news, item_detail
+from movies.urls import urlpatterns as movies_urls
+from workspace.urls import urlpatterns as workspace_urls
+from workspace import views as workspace_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('', include('movies.urls')),
-    path('', main, name="main"),
-    path('<int:movie_id>', detail_news, name="movie_list"),
-    path('<int:movie_id>', item_detail, name='item_detail'),
-    path('', lambda r: redirect('/news/'), name='main')
+    path('news/', include(movies_urls)),
+    path('auth/login/', workspace_views.login_profile, name='login'),
+    path('auth/logout/', workspace_views.logout_profile, name='logout'),
+    path('auth/register/', workspace_views.register, name='register'),
+    path('auth/change_profile', workspace_views.change_profile, name='change_profile'),
+    path('auth/change_password/', workspace_views.change_password, name='change_password'),
+    path('', lambda r: redirect('/news/'), name='main'),
+    path('news/', include(workspace_urls)),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-# urlpatterns = [
-#     path('admin/', admin.site.urls),
-#     path('', main, name='name'),
-#     path('news/<int:id>/', detail_news, name='detail_news'),
-#     path('home/', home, name='home'),
-#     path('news/', include('news.urls')),
-#     path('', lambda r: redirect('/news/'), name='main')
-#
-# ]

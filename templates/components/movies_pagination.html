@@ -1,0 +1,36 @@
+
+{% if news.has_previous or news.has_next %}
+        <div class="flex justify-center mt-5 text-black">
+            <ul class="flex pagination">
+                {% if news.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link border-r border-gray-300 inline-block py-2 px-4"
+                           href="?page={{ news.previous_page_number }}">
+                            <i class="fas fa-angle-left"></i>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% for i in news.paginator.page_range %}
+                    {% if news.number == i %}
+                        <li class="page-item">
+                            <span class="page-link border-r border-gray-300 inline-block py-2 px-4 bg-blue-500 text-white">{{ i }}</span>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link border-r border-gray-300 inline-block py-2 px-4 hover:bg-black-100"
+                               href="?page={{ i }}">{{ i }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if news.has_next %}
+                    <li class="page-item">
+                        <a class="page-link inline-block py-2 px-4" href="?page={{ news.next_page_number }}">
+                            <i class="fas fa-angle-right"></i>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    {% endif %}

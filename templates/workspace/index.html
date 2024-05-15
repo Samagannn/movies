@@ -1,0 +1,155 @@
+{% extends 'workspace/base.html' %}
+
+{% block title %}| Paints{% endblock title %}
+
+{% block content %}
+    <style>
+        body {
+            background-color: #e3ddc2;
+            color: #adadef;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .container {
+            margin: 0 auto;
+        }
+
+        .btn-success {
+            background-color: #5897fb;
+            border-radius: 10px;
+            padding: 10px;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-success:hover {
+            background-color: #3b82f6;
+        }
+
+        .btn-primary,
+        .btn-pink,
+        .btn-danger {
+            border-radius: 10px;
+            padding: 10px;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover,
+        .btn-pink:hover,
+        .btn-danger:hover {
+            opacity: 0.8;
+        }
+
+        .btn-primary {
+            background-color: #4ac1f7;
+        }
+
+        .btn-pink {
+            background-color: #d8d82d;
+        }
+
+        .btn-danger {
+            background-color: #ef1b1b;
+        }
+
+        .movie-card {
+            background-color: #2d3748;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            transition: background-color 0.3s ease;
+        }
+
+        .movie-card:hover {
+            background-color: #4a5568;
+        }
+
+        .movie-card img {
+            border-radius: 8px;
+            object-fit: cover
+        }
+
+        .movie-card h5 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .movie-card h6 {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .movie-card p {
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background-color: #cbd5e0;
+            color: #2d3748;
+            border-radius: 9999px;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+
+        .tag:hover {
+            background-color: #a0aec0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 0 30px;
+        }
+
+    </style>
+
+
+    <div class="container">
+        {% include 'components/nav.html' %}
+        <div class="flex justify-between mt-5">
+            <h2 class="mb-5 text-black text-2xl mt-5">Welcome to Eco-Friendly Paints For A Healthy Home</h2>
+            <div><a class="btn btn-success" href="{% url 'create_movies' %}">Create</a></div>
+        </div>
+
+        <div class="grid md:grid-cols-5 gap-3 flex">
+            {% for item in news %}
+                <div class="relative group movie-card">
+                    {% if item.image %}
+                        <img src="{{ item.image.url }}" class="w-full h-80 mb-4" alt="{{ item.title }}">
+                    {% endif %}
+                    <div class="p-4 mb-5">
+                        <h5>{{ item.title }}</h5>
+                        <h6>{{ item.category.name }}</h6>
+                        <p>{{ item.description }}</p>
+                        <div class="mt-2 mb-5">
+                            {% for tag in item.tags.all %}
+                                <span class="tag">{{ tag.name }}</span>
+                            {% endfor %}
+                        </div>
+                        <a href="{% url 'detail_news' movie_id=item.id %}" class="btn btn-primary">View</a>
+                        <a href="{{ item.id }}/update/" class="btn btn-pink"><i class="fas fa-pen-to-square"></i></a>
+                        <a href="{{ item.id }}/delete/" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                    </div>
+                </div>
+            {% empty %}
+                <h4 class="text-xl font-bold">No movies...</h4>
+                </div>
+            {% endfor %}
+        <div class="ml-5 flex-container">
+            {#            {% include 'components/sidebar.html' %}#}
+        </div>
+    </div>
+    {% include 'components/movies_pagination.html' %}
+    </div>
+{% endblock content %}

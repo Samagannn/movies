@@ -1,0 +1,218 @@
+{% extends 'workspace/base.html' %}
+
+{% block title %}| Workspace{% endblock title %}
+
+{% block content %}
+    <style>
+        .btn {
+            padding: 10px;
+            border: 1px solid #1F1E1E;
+            background-color: #4e4848;
+            border-radius: 4.17px;
+            color: white;
+            cursor: pointer;
+            margin-left: 55px;
+        }
+
+        .shop_all_colors {
+            border: 1px solid #1F1E1E;
+            background-color: #1F1E1E;
+            color: white;
+            width: 139px;
+            height: 37px;
+            border-radius: 4.17px;
+        }
+
+        .purifies_indoor_spaces {
+            border: 1px solid #F4EDE6;
+            border-radius: 8.33px;
+            background-color: #F4EDE6;
+            width: 546px;
+            height: 546px;
+        }
+
+        .text-10xl {
+            font-size: 20rem;
+        }
+
+        @media (max-width: 768px) {
+            .row {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .text-10xl {
+                font-size: 6rem;
+            }
+
+            .flex.items-center.justify-center.gap-10 {
+                flex-direction: column;
+            }
+
+            .flex.text-9xl.mt-10.justify-center {
+                font-size: 6rem;
+            }
+
+            .logo.flex.items-center.justify-center.gap-20 {
+                flex-direction: column;
+            }
+
+            .col-lg-4.col-md-6.col-12.mb-4 {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .logo.flex.items-center.justify-center.gap-20 {
+                flex-wrap: wrap;
+            }
+
+            .relativ {
+                display: none;
+            }
+
+            .col-lg-4.col-md-6.col-12.mb-4 {
+                width: 25%;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .col-lg-4.col-md-6.col-12.mb-4 {
+                width: 33.33%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .col-lg-4.col-md-6.col-12.mb-4 {
+                width: 50%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .col-lg-4.col-md-6.col-12.mb-4 {
+                width: 100%;
+            }
+        }
+    </style>
+
+    {% include 'components/workspace/nav.html' %}
+    <div class="row">
+        {% include 'components/messages.html' %}
+        <div class="flex items-center justify-center gap-10">
+            <div class="flex items-center mt-20">
+                <span class="text-xl">0 1</span>
+                <span class="ml-5">Eco-friendly & Premium <br>
+                    A+ paint
+                </span>
+            </div>
+            <div class="flex items-center ml-10 mt-20">
+                <span class="text-xl">0 2</span>
+                <span class="ml-5">Curated selection <br>
+                    of 50 exclusive colors
+                </span>
+            </div>
+            <div class="flex items-center ml-10 mt-20">
+                <span class="text-xl">0 3</span>
+                <span class="ml-5">Easy to try on with our <br>
+                    sample stickers
+                </span>
+            </div>
+            <div class="flex items-center ml-10 mt-20">
+                <span class="text-xl">0 4</span>
+                <span class="ml-5">Free shipping & <br>
+                    returns in Europe
+                </span>
+            </div>
+        </div>
+        <div class="flex text-9xl mt-10 justify-center items-center">New drops</div>
+        <div class="logo flex items-center justify-center gap-20 mt-10">
+            <div class="relativ">
+                {% include 'components/sidebar.html' %}
+            </div>
+            {% for item in news %}
+                <div class="flex col-lg-4 col-md-6 col-12 mb-4 justify-center items-center mb-20">
+                    <div class="card h-100">
+                        <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.title }}">
+                        <div class="card-body">
+                            <h5 class="card-title text-xs ml-7 mt-4 mb-7">{{ item.title }}</h5>
+                            <p class="card-text">{{ item.description }}</p>
+                            <a href="{% url 'detail_news' movie_id=item.id %}" class="btn btn-primary">View</a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <h4>No Eco-Friendly <br>
+                    Paints For A <br>
+                    Healthy Home...</h4>
+            {% endfor %}
+        </div>
+        {% include 'components/movies_pagination.html' %}
+
+        <div class="flex items-center justify-center mt-10">
+            <a href="#" class="flex items-center justify-center shop_all_colors">
+                Shop all colors
+            </a>
+        </div>
+        <div class="flex items-center justify-center mt-20">Our Mission</div>
+        <div class="flex items-center justify-center text-5xl mt-6 text-center mb-20">
+            Pollution isn't just outside, there's <br>
+            something magical about our VOC-free <br>
+            environmentally friendly paints. Palette <br>
+            clears your interior of pollutants and is <br> anti-bacterial.
+        </div>
+        <div class="border"></div>
+        <div class="flex items-center justify-center flex-col md:flex-row md:gap-8 lg:gap-16 mt-20">
+            <div>
+                <img src="/media/images/IMAGE6.png" alt="">
+            </div>
+            <div class="purifies_indoor_spaces text-center">
+                <div class="text-4xl md:text-5xl lg:text-6xl md:mt-20">
+                    Purifies indoor <br> spaces of airborne <br> pollutants.
+                </div>
+                <div class="text-xs md:text-sm lg:text-base md:mt-40">
+                    Anti-Molding, Zero VOC, Odourless and Easy to Clean
+                </div>
+            </div>
+        </div>
+        <div class="flex text-9xl mt-10 justify-center items-center">No, No, No</div>
+        <div class="flex items-center justify-center text-5xl mt-6 text-center mb-20">
+            No VOC — better for you and the environment <br>
+            No Odor — avoid unpleasant paint smells <br>
+            No Microbes — Antimicrobial, Antibacterial and Anti-molding <br>
+            No Delivery costs — free shipping in Europe
+        </div>
+        <div class="flex items-center justify-center mt-7">
+            <a href="#" class="flex items-center justify-center shop_all_colors">
+                About Palette
+            </a>
+        </div>
+        <div class="flex items-center justify-center flex-col md:flex-row md:gap-8 lg:gap-16 mt-20">
+            <div class="purifies_indoor_spaces text-center">
+                <div class="text-4xl md:text-5xl lg:text-6xl md:mt-20">
+                    Try our sticker <br> samples before <br> making up your <br> mind!
+                </div>
+                <div class="text-xs md:text-sm lg:text-base md:mt-40">
+                    Anti-Molding, Zero VOC, Odourless and Easy to Clean
+                </div>
+            </div>
+            <div>
+                <img src="/media/images/IMAGE7.png" alt="">
+            </div>
+        </div>
+        <div class="border mt-20 mb-20"></div>
+        <div class="flex items-center justify-center text-10xl">PALETTE</div>
+        <div class="flex items-center justify-center py-10 justify-between">
+            <div class="flex gap-20">
+                <p>4.3—5</p>
+                <p>We are on Trustpilot</p>
+            </div>
+            <div class="flex gap-20">
+                <p>Terms of service</p>
+                <p>Privacy Policy</p>
+                <p>Language: ENGLISH</p>
+            </div>
+        </div>
+    </div>
+    {#    {% include 'components/workspace/movies_filter.html' %}#}
+
+{% endblock content %}

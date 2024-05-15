@@ -1,0 +1,24 @@
+{% load news_tags %}
+
+{% get_categories as categories %}
+
+{% for category in categories %}
+    <div class="nav-item">
+        <a class="nav-link" aria-current="page"
+           href="{% url 'news_by_category' id=category.id %}">{{ category.name }}</a>
+    </div>
+{% endfor %}
+
+<style>
+    .nav-item .nav-link{
+        text-decoration: none;
+        border: 1px solid transparent;
+        border-radius: 10px;
+        transition: .3s;   
+        padding: 8px 12px;
+    }
+    .nav-item .nav-link:hover{
+        border-color: white;
+        
+    }
+</style>

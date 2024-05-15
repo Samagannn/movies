@@ -1,0 +1,81 @@
+{% extends 'workspace/base.html' %}
+
+{% block title %}| Create Paints{% endblock title %}
+
+{% block content %}
+    <h1 class="mb-5 mt-5 flex items-center justify-center text-3xl">Create paints</h1>
+    <div class="flex items-center justify-center">
+        <form action="{% url 'create_movies' %}" method="post" novalidate enctype="multipart/form-data">
+            {% csrf_token %}
+        <div style="width: 200%">
+            <div class="mb-4">
+                <label for="id_title" class="block mb-1">{{ form.title.label }}</label>
+                <input type="text" name="title" id="id_title"
+                       class="w-full px-3 py-2 border rounded-md placeholder-gray-400 focus:outline-none focus:border-blue-500">
+                {% for error in form.title.errors %}
+                    <div class="mt-1 mb-2 text-red-500">{{ error }}</div>
+                {% endfor %}
+            </div>
+            <div class="mb-4">
+                <label for="id_image" class="block mb-1">{{ form.image.label }}</label>
+                <input type="file" name="image" id="id_image"
+                       class="w-full px-3 py-2 border rounded-md placeholder-gray-400 focus:outline-none focus:border-blue-500">
+                {% for error in form.image.errors %}
+                    <div class="mt-1 mb-2 text-red-500">{{ error }}</div>
+                {% endfor %}
+            </div>
+            <div class="mb-4">
+                <label for="id_price" class="block mb-1">{{ form.price.label }}</label>
+                <input type="text" name="price" id="id_price"
+                       class="w-full px-3 py-2 border rounded-md placeholder-gray-400 focus:outline-none focus:border-blue-500">
+                {% for error in form.price.errors %}
+                    <div class="mt-1 mb-2 text-red-500">{{ error }}</div>
+                {% endfor %}
+            </div>
+            <div class="mb-4">
+                <label for="id_content" class="block mb-1">{{ form.content.label }}</label>
+                <textarea name="content" id="id_content" rows="4"
+                          class="w-full px-3 py-2 border rounded-md placeholder-gray-400 focus:outline-none focus:border-blue-500"></textarea>
+                {% for error in form.content.errors %}
+                    <div class="mt-1 mb-2 text-red-500">{{ error }}</div>
+                {% endfor %}
+            </div>
+            <div class="mb-4">
+                <label for="id_category" class="block mb-1">{{ form.category.label }}</label>
+                {{ form.category }}
+                {% for error in form.category.errors %}
+                    <div class="mt-1 mb-2 text-red-500">{{ error }}</div>
+                {% endfor %}
+            </div>
+            <div class="mb-4">
+                <label for="id_tags" class="block mb-1">{{ form.tags.label }}</label>
+                {{ form.tags }}
+                {% for error in form.tags.errors %}
+                    <div class="mt-1 mb-2 text-red-500">{{ error }}</div>
+                {% endfor %}
+            </div>
+            <div>
+                <button type="submit"
+                        class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 mb-5 rounded w-full">
+                    Create
+                </button>
+            </div>
+        </div>
+        </form>
+    </div>
+
+
+
+
+    <div>
+        {#        <form action="{% url 'create_movies' %}" method="post" novalidate enctype="multipart/form-data">#}
+        {#            {% csrf_token %}#}
+        {#            {{ form.as_p }}#}
+        {#            <div>#}
+        {#                <button type="submit" class="btn btn-success w-100 d-block">Create</button>#}
+        {#            </div>#}
+        {##}
+        {#        </form>#}
+    </div>
+
+{% endblock content %}

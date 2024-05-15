@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+
+{% block title %}| Details{{ news.title }}{% endblock title %}
+
+{% block content %}
+    <div class="container mx-auto mt-5">
+        <div class="flex flex-wrap mb-6">
+            <div class="w-full md:w-1/2 mb-4 md:mb-0">
+                <div class="slider-container relative px-20 py-70">
+                    <img src="{{ news.image.url }}" alt="{{ news.title }}">
+                </div>
+            </div>
+            <div class="w-full md:w-1/2 md:pl-6">
+                <h1 class="mb-3 text-2xl mt-5">{{ news.title }}</h1>
+                <p class="text-left  mb-3"> Category: {{ news.category.name }}</p>
+                <p class="text-left mb-3"> Price: {{ news.price }}</p>
+                <p class="mb-6">{{ news.content }}</p>
+                <table class="table-auto w-full">
+                    <thead>
+                    <tr>
+                        <th class="px-4 py-2">Key</th>
+                        <th class="px-4 py-2">Value</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for attribute in news.attributes.all %}
+                        <tr>
+                            <td class="border px-4 py-2">{{ attribute.name }}</td>
+                            <td class="border px-4 py-2">
+                                {% if attribute.link %}
+                                    <a href="{{ attribute.link }}" class="text-blue-500">{{ attribute.value }}</a>
+                                {% else %}
+                                    {{ attribute.value }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% if news.info %}
+                    <p class="text-end mt-3">
+                        <a target="_blank" href="{{ news.info.link }}" class="text-blue-500">Link</a> |
+                        <span>{{ news.info.email }}: {{ news.info.rating }}</span>
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div id="myModal" class="modal">
+        <span class="close cursor" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+            {% for image in news.images.all %}
+                <img src="{{ image.image.url }}" class="mySlides" alt="{{ news.title }}">
+            {% endfor %}
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+    </div>
+
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            padding-top: 60px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        .container {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .mySlides {
+            display: none;
+            width: 100%;
+        }
+
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -50px;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+
+        .prev {
+            left: 0;
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+
+    <script>
+        let currentIndex = 0;
+        const images = document.querySelectorAll('.slider-container img');
+
+        function showSlide(index) {
+            images.forEach((image, idx) => {
+                if (idx === index) {
+                    image.classList.remove('hidden');
+                } else {
+                    image.classList.add('hidden');
+                }
+            });
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex === 0) ? images.length - 1 : currentIndex - 1;
+            showSlide(currentIndex);
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % images.length;
+            showSlide(currentIndex);
+        }
+
+        function openModal() {
+            document.getElementById("myModal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+        }
+
+        var slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            if (n > slides.length) {
+                slideIndex = 1
+            }
+            if (n < 1) {
+                slideIndex = slides.length
+            }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slides[slideIndex - 1].style.display = "block";
+        }
+    </script>
+{% endblock content %}
+
